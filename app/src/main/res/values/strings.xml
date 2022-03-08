@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Tic Tac Toe</string>
+
+    <string name="app_version">1.0</string>
+
+    <string name="dev_github_link">github.com/Leop4rdo</string>
+
+    <!--  Title  -->
+    <string name="title_main_activity">Jogo Da Velha</string>
+    <string name="title_activity_dificuldade">Selecione a dificuldade</string>
+
+    <!--  Game Difficulties  -->
+    <string name="difficulty_easy">Fácil</string>
+    <string name="difficulty_normal">Normal</string>
+    <string name="difficulty_hard">Difícil</string>
+</resources>
