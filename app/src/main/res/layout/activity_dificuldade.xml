@@ -28,17 +28,17 @@
         android:orientation="vertical">
 
         <!--  Button Facil  -->
-        <LinearLayout style="@style/button" android:id="@+id/facil">
+        <LinearLayout style="@style/button" android:id="@+id/button_facil">
             <TextView style="@style/button_text" android:text="@string/difficulty_easy"/>
         </LinearLayout>
 
         <!--  Button Normal  -->
-        <LinearLayout style="@style/button" android:id="@+id/normal">
+        <LinearLayout style="@style/button" android:id="@+id/button_normal">
             <TextView style="@style/button_text" android:text="@string/difficulty_normal"/>
         </LinearLayout>
 
         <!--  Button Dificil  -->
-        <LinearLayout style="@style/button" android:id="@+id/dificil">
+        <LinearLayout style="@style/button" android:id="@+id/button_dificil">
             <TextView style="@style/button_text" android:text="@string/difficulty_hard"/>
         </LinearLayout>
 
@@ -47,6 +47,6 @@
             android:layout_width="80dp"
             style="@style/button"
             android:src="@drawable/ic_baseline_undo_24"
-            android:id="@+id/voltar"/>
+            android:id="@+id/button_voltar"/>
     </LinearLayout>
 </LinearLayout>

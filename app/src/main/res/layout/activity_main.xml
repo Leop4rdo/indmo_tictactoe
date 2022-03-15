@@ -32,7 +32,7 @@
             android:layout_width="250dp"
             android:layout_height="60dp"
             style="@style/button"
-            android:id="@+id/pvp">
+            android:id="@+id/button_pvp">
 
             <ImageView
                 android:layout_width="64dp"
@@ -55,7 +55,7 @@
             android:layout_width="250dp"
             android:layout_height="60dp"
             style="@style/button"
-            android:id="@+id/pve">
+            android:id="@+id/button_pve">
 
             <ImageView
                 android:layout_width="64dp"
