@@ -46,7 +46,7 @@
         <ImageButton
             android:layout_width="80dp"
             style="@style/button"
-            android:src="@drawable/ic_baseline_undo_24"
+            android:src="@drawable/ic_baseline_undo_48"
             android:id="@+id/button_voltar"/>
     </LinearLayout>
 </LinearLayout>

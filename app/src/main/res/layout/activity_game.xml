@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameActivity"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <!--  Navigation  -->
+    <RelativeLayout
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:paddingHorizontal="5dp">
+
+        <ImageButton
+            android:id="@+id/button_home"
+            style="@style/button"
+            android:layout_width="80dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_baseline_home_48"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="0dp"/>
+
+
+        <ImageButton
+            android:id="@+id/button_voltar"
+            style="@style/button"
+            android:layout_width="80dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_baseline_undo_48"
+            android:layout_alignParentRight="true"
+            android:layout_margin="0dp"/>
+    </RelativeLayout>
+
+    <!--  Game Header   -->
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="25dp">
+
+        <!--  Player 1  -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player 1"
+                android:textColor="@color/gray"
+                android:textSize="24sp"
+                android:layout_marginBottom="10dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_gradient_x" />
+        </LinearLayout>
+
+        <!--  Jogada Atual  -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="40dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jogada Atual"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_gray_x"/>
+        </LinearLayout>
+
+        <!--  Player 2  -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player 2"
+                android:textColor="@color/gray"
+                android:textSize="24sp"
+                android:layout_marginBottom="10dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_gradient_o" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--  Game Board  -->
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!-- First Row  -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginVertical="0dp"
+                style="@style/button"/>
+
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginVertical="0dp"
+                style="@style/button"
+                android:layout_marginHorizontal="15dp"/>
+
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginVertical="0dp"
+                style="@style/button"/>
+
+        </LinearLayout>
+
+        <!-- Second Row  -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="15dp">
+
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginVertical="0dp"
+                style="@style/button" />
+
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginVertical="0dp"
+                style="@style/button"
+                android:layout_marginHorizontal="15dp"/>
+
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginVertical="0dp"
+                style="@style/button" />
+
+        </LinearLayout>
+
+
+        <!-- Third Row  -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginVertical="0dp"
+                style="@style/button"/>
+
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginVertical="0dp"
+                style="@style/button"
+                android:layout_marginHorizontal="15dp"/>
+
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginVertical="0dp"
+                style="@style/button"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
