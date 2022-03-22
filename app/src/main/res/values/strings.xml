@@ -16,4 +16,5 @@
 
     <!--  Dialogs  -->
     <string name="dialog_wip">Funcionalidade ainda em desenvolvimento</string>
+    <string name="dialog_invalid_move">Movimento Invalido</string>
 </resources>

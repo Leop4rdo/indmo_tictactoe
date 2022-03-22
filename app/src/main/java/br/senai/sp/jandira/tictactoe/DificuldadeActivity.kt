@@ -19,15 +19,15 @@ class DificuldadeActivity : AppCompatActivity() {
 
         binding.buttonVoltar.setOnClickListener { finish() }
 
-        binding.buttonFacil.setOnClickListener { startGame(GameDifficulties.EASY) }
+        binding.buttonFacil.setOnClickListener { dialogWIP.show() }
         binding.buttonNormal.setOnClickListener { dialogWIP.show() }
         binding.buttonDificil.setOnClickListener { dialogWIP.show() }
     }
 
-    private fun startGame(gameDificulty : GameDifficulties) {
+    private fun startGame(gameDifficulty : GameDifficulties) {
         val intent = Intent(this, GameActivity::class.java)
 
-        intent.putExtra("gameDificulty", gameDificulty)
+        intent.putExtra("gameDifficulty", gameDifficulty)
         intent.putExtra("gameMode", GameModes.PVE) // definindo modo de jogo para pve
 
         startActivity(intent)
