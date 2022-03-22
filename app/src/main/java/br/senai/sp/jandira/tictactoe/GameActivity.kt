@@ -14,6 +14,8 @@ class GameActivity : AppCompatActivity() {
     /** estado atual dos tiles */
     val gameState = IntArray(9) { 2 }
 
+    var gameOver = false
+
     /**
      * define de quem é a vez.
      * 0 -> player 1,
@@ -50,6 +52,9 @@ class GameActivity : AppCompatActivity() {
      * função chamada quando o jogador realiza um movimento
      */
     private fun onPlayerTap(tile: ImageView) {
+        // se o jogo ja terminou, impede a realização de novos movimentos
+        if (gameOver) return
+
         val tileId = tile.getTag().toString().toInt();
 
         // se o tile ja  estiver preenchido, impede a jogada e exibe uma mensagem
@@ -60,6 +65,9 @@ class GameActivity : AppCompatActivity() {
         gameState[tileId] = activePlayer;
 
         turnCount++
+
+        gameOver = isGameOverByWin() || turnCount >= 9
+        Toast.makeText(this, "gameOver -> ${gameOver}", Toast.LENGTH_SHORT).show()
 
         // verifica se alguem ganhou
         if (isGameOverByWin()) return Toast.makeText(this, "Game Over, player ${activePlayer} ganhou!", Toast.LENGTH_SHORT).show()
