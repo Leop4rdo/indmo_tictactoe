@@ -12,6 +12,7 @@ import android.widget.Toast
 
 import br.senai.sp.jandira.tictactoe.databinding.ActivityGameBinding
 import br.senai.sp.jandira.tictactoe.databinding.GameOverDialogBinding
+import java.lang.Exception
 
 class GameActivity : AppCompatActivity() {
     lateinit var binding: ActivityGameBinding
@@ -94,7 +95,7 @@ class GameActivity : AppCompatActivity() {
         turnCount++
 
         // verifica se alguem ganhou
-        if (isGameOverByWin()) return showGameOverDialog("Player ${activePlayer + 1} Ganhou!!!")
+        if (isGameOverByWin()) return showGameOverDialog("Player ${getPlayerName(activePlayer)} Ganhou!!!")
 
         // verifica se deu velha
         if (turnCount >= 9) return showGameOverDialog("Empate!!!")
@@ -211,5 +212,13 @@ class GameActivity : AppCompatActivity() {
 
         activePlayer = 0;
         binding.imgCurrentTurn.setImageResource(R.drawable.ic_gray_x)
+    }
+
+    private fun getPlayerName(player: Int) :  String{
+        when (player){
+            0 -> return "X"
+            1 -> return "O"
+            else -> throw Exception("Player Not Found")
+        }
     }
 }
