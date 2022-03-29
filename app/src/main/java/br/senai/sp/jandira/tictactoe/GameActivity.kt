@@ -4,20 +4,27 @@ import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
+
 import android.view.Window
-import android.widget.ImageButton
+
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+
 import br.senai.sp.jandira.tictactoe.databinding.ActivityGameBinding
 import br.senai.sp.jandira.tictactoe.databinding.GameOverDialogBinding
-import kotlinx.android.synthetic.main.game_over_dialog.*
 
 class GameActivity : AppCompatActivity() {
     lateinit var binding: ActivityGameBinding
 
+    lateinit var gameMode: GameModes
+    lateinit var gameDifficulty: GameDifficulties
+
+    lateinit var gameTiles: Array<ImageView>
+
     val tokens = arrayOf(R.drawable.ic_token_x, R.drawable.ic_token_o)
+
+    /** array responsavel por armazenar todos os tiles do board */
+
 
     /**
      * guarda o estado atual dos tiles do jogo
@@ -45,10 +52,14 @@ class GameActivity : AppCompatActivity() {
         binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /** array responsavel por armazenar todos os tiles do board */
-        val gameTiles = arrayOf<ImageView>(binding.tile0, binding.tile1, binding.tile2,
-                                            binding.tile3, binding.tile4, binding.tile5,
-                                            binding.tile6, binding.tile7, binding.tile8)
+        gameMode = GameModes.valueOf(this.intent.getStringExtra("gameMode")!!);
+        if ( gameMode == GameModes.PVE ) gameDifficulty = GameDifficulties.valueOf(this.intent.getStringExtra("gameDifficulty")!!);
+
+        // atribuindo os tiles ao array gameTiles
+        gameTiles = arrayOf<ImageView>(binding.tile0, binding.tile1, binding.tile2,
+            binding.tile3, binding.tile4, binding.tile5,
+            binding.tile6, binding.tile7, binding.tile8)
+
 
         // o bloco de codigo abaixo define o ClickListener de cada tile para chamar a função makeMove(tile);
         gameTiles.forEach {
@@ -67,11 +78,11 @@ class GameActivity : AppCompatActivity() {
      * função chamada quando o jogador realiza um movimento
      */
     private fun makeMove(tile: ImageView) {
-        // pegando o index do tile no array gameState[]
-        val tileIndex = tile.getTag().toString().toInt();
-
         // se o jogo ja terminou, impede a realização de novos movimentos
         if (gameOver) return
+
+        // pegando o index do tile no array gameState[]
+        val tileIndex = tile.getTag().toString().toInt();
 
         // se o tile ja  estiver preenchido, impede a jogada e exibe uma mensagem
         if (gameState[tileIndex] != 2) return Toast.makeText(this, R.string.dialog_invalid_move, Toast.LENGTH_SHORT).show()
@@ -90,6 +101,13 @@ class GameActivity : AppCompatActivity() {
 
         // alterando o jogador ativo
         updateActivePlayer()
+
+        if (gameMode == GameModes.PVE && activePlayer == 1) {
+            val gameAI = GameAI(gameDifficulty, gameState);
+            val aiMove = gameAI.makeMove()
+
+            makeMove(gameTiles[aiMove]);
+        }
     }
 
     /**

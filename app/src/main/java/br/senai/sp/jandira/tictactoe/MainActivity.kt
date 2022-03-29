@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private fun startGame() {
         val intent = Intent(this, GameActivity::class.java)
 
-        intent.putExtra("gameMode", GameModes.PVP) // definindo modo de jogo para pvp
+        intent.putExtra("gameMode", GameModes.PVP.toString()) // definindo modo de jogo para pvp
 
         startActivity(intent)
     }
