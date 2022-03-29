@@ -9,6 +9,7 @@
     <string name="title_main_activity">Jogo Da Velha</string>
     <string name="title_activity_dificuldade">Selecione a dificuldade</string>
 
+
     <!--  Game Difficulties  -->
     <string name="difficulty_easy">Fácil</string>
     <string name="difficulty_normal">Normal</string>
@@ -17,4 +18,5 @@
     <!--  Dialogs  -->
     <string name="dialog_wip">Funcionalidade ainda em desenvolvimento</string>
     <string name="dialog_invalid_move">Movimento Invalido</string>
+    <string name="dialog_draw">Empate!</string>
 </resources>
