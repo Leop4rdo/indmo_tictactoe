@@ -26,7 +26,7 @@ class GameActivity : AppCompatActivity() {
      * 1 -> preenchido pelo jogador 2
      * 2 -> tile não preenchido ainda
      */
-    val gameState = IntArray(9) { 2 }
+    var gameState = IntArray(9) { 2 }
 
     var gameOver = false
 
@@ -83,30 +83,13 @@ class GameActivity : AppCompatActivity() {
         turnCount++
 
         // verifica se alguem ganhou
-        if (isGameOverByWin()) showGameOverDialog("Player ${activePlayer + 1} Ganhou!!!")
+        if (isGameOverByWin()) return showGameOverDialog("Player ${activePlayer + 1} Ganhou!!!")
 
         // verifica se deu velha
-        if (turnCount >= 9) showGameOverDialog("Empate!!!")
+        if (turnCount >= 9) return showGameOverDialog("Empate!!!")
 
         // alterando o jogador ativo
         updateActivePlayer()
-    }
-
-    /**
-     * define o jogador ativo e atualiza o indicador
-     */
-    private fun updateActivePlayer() {
-        if (activePlayer == 0) {
-            // Vez do jogador 2
-
-            activePlayer = 1
-            binding.imgCurrentTurn.setImageResource(R.drawable.ic_gray_o)
-        } else {
-            // Vez do jogador 1
-
-            activePlayer = 0
-            binding.imgCurrentTurn.setImageResource(R.drawable.ic_gray_x)
-        }
     }
 
     /**
@@ -143,13 +126,37 @@ class GameActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * define o jogador ativo e atualiza o indicador
+     */
+    private fun updateActivePlayer() {
+        if (activePlayer == 0) {
+            // Vez do jogador 2
+
+            activePlayer = 1
+            binding.imgCurrentTurn.setImageResource(R.drawable.ic_gray_o)
+        } else {
+            // Vez do jogador 1
+
+            activePlayer = 0
+            binding.imgCurrentTurn.setImageResource(R.drawable.ic_gray_x)
+        }
+    }
+
+    /**
+     * Exibe a mensagem de fim de jogo
+     *
+     * @param   message   messagem exibida no titulo do dialog
+     */
     private fun showGameOverDialog(message: String) {
         val dialog: Dialog = Dialog(this);
         val dialogBinding: GameOverDialogBinding =  GameOverDialogBinding.inflate(layoutInflater)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
+        dialog.window!!.setBackgroundDrawableResource(R.drawable.game_over_dialog);
         dialog.setContentView(dialogBinding.root);
+
 
         dialogBinding.dialogTitle.text = message;
 
@@ -168,7 +175,23 @@ class GameActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    /**
+     * Responsavel por reiniciar o jogo e o board
+     */
     private fun restartGame() {
+        gameState = IntArray(9) { 2 }
+        turnCount = 0;
 
+        // limpando board
+        val gameTiles = arrayOf<ImageView>(binding.tile0, binding.tile1, binding.tile2,
+            binding.tile3, binding.tile4, binding.tile5,
+            binding.tile6, binding.tile7, binding.tile8)
+
+        gameTiles.forEach {
+            it.setImageResource(0);
+        }
+
+        activePlayer = 0;
+        binding.imgCurrentTurn.setImageResource(R.drawable.ic_gray_x)
     }
 }
