@@ -18,44 +18,18 @@ import java.lang.Exception
 class GameActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameBinding
 
-    private lateinit var gameMode: GameModes
-    private lateinit var gameDifficulty: GameDifficulties
-
-    private lateinit var gameTiles: Array<ImageView>
-
-    private val tokens = arrayOf(R.drawable.ic_token_x, R.drawable.ic_token_o)
+    private val game = Game();
 
     /** array responsavel por armazenar todos os tiles do board */
-
-
-    /**
-     * guarda o estado atual dos tiles do jogo
-     *
-     * 0 -> preenchido pelo jogador 1
-     * 1 -> preenchido pelo jogador 2
-     * 2 -> tile não preenchido ainda
-     */
-    private var gameState = IntArray(9) { 2 }
-
-    private var gameOver = false
-
-    /**
-     * define de quem é a vez.
-     * 0 -> player 1,
-     * 1 -> player 2 ou AI,
-     */
-    private var activePlayer = 0
-
-    /** responsavel por determinar quantas jogadas ja foram realizadas */
-    private var turnCount = 0
+    private lateinit var gameTiles: Array<ImageView>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        gameMode = GameModes.valueOf(this.intent.getStringExtra("gameMode")!!);
-        if ( gameMode == GameModes.PVE ) gameDifficulty = GameDifficulties.valueOf(this.intent.getStringExtra("gameDifficulty")!!);
+        game.mode = GameModes.valueOf(this.intent.getStringExtra("gameMode")!!);
+        if ( game.mode == GameModes.PVE ) game.difficulty = GameDifficulties.valueOf(this.intent.getStringExtra("gameDifficulty")!!);
 
         // atribuindo os tiles ao array gameTiles
         gameTiles = arrayOf<ImageView>(binding.tile0, binding.tile1, binding.tile2,
@@ -84,31 +58,29 @@ class GameActivity : AppCompatActivity() {
      */
     private fun makeMove(tile: ImageView) {
         // se o jogo ja terminou, impede a realização de novos movimentos
-        if (gameOver) return
+        if (game.isOver) return
 
         // pegando o index do tile no array gameState[]
-        val tileIndex = tile.getTag().toString().toInt();
+        val tileIndex = tile.tag.toString().toInt();
 
         // se o tile ja  estiver preenchido, impede a jogada e exibe uma mensagem
-        if (gameState[tileIndex] != 2) return Toast.makeText(this, R.string.dialog_invalid_move, Toast.LENGTH_SHORT).show()
+        if (game.state[tileIndex] != 2) return Toast.makeText(this, R.string.dialog_invalid_move, Toast.LENGTH_SHORT).show()
 
         // realizando a jogada
-        tile.setImageResource(tokens[activePlayer]);
-        gameState[tileIndex] = activePlayer;
-
-        turnCount++
+        tile.setImageResource(game.tokens[game.activePlayer]);
+        game.move(tileIndex);
 
         // verifica se alguem ganhou
-        if (isGameOverByWin()) return showGameOverDialog("Player ${getPlayerName(activePlayer)} Ganhou!!!")
+        if (game.isGameOverByWin()) return showGameOverDialog("Player ${game.getPlayerName(game.activePlayer)} Ganhou!!!")
 
         // verifica se deu velha
-        if (turnCount >= 9) return showGameOverDialog("Empate!!!")
+        if (game.isGameOverByDraw()) return showGameOverDialog("Empate!!!")
 
         // alterando o jogador ativo
         updateActivePlayer()
 
-        if (gameMode == GameModes.PVE && activePlayer == 1) {
-            val gameAI = GameAI(gameDifficulty, gameState);
+        if (game.mode == GameModes.PVE && game.activePlayer == 1) {
+            val gameAI = GameAI(game.difficulty, game);
             val aiMove = gameAI.makeMove()
 
             Handler().postDelayed({
@@ -117,53 +89,20 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Verifica se o jogo acabou com uma vitoria de um dos jogadores
-     */
-    private fun isGameOverByWin() : Boolean {
-        return  isHorizontalWin() || isVerticalWin() || isDiagonalWin()
-    }
-
-    /**
-     * Verifica se o jogo acabou com uma vitoria na horizontal
-     */
-    private fun isHorizontalWin() : Boolean {
-        return (gameState[0] != 2 && gameState[0] == gameState[1] && gameState[1] == gameState[2]) ||
-                (gameState[3] != 2 && gameState[3] == gameState[4] && gameState[4] == gameState[5]) ||
-                (gameState[6] != 2 && gameState[6] == gameState[7] && gameState[7] == gameState[8])
-    }
-
-    /**
-     * Verifica se o jogo acabou com uma vitoria na vertical
-     */
-    private fun isVerticalWin() : Boolean {
-        return (gameState[0] != 2 && gameState[0] == gameState[3] && gameState[3] == gameState[6]) ||
-                (gameState[1] != 2 && gameState[1] == gameState[4] && gameState[4] == gameState[7]) ||
-                (gameState[2] != 2 && gameState[2] == gameState[5] && gameState[5] == gameState[8])
-    }
-
-    /**
-     * Verifica se o jogo acabou com uma vitoria na diagonal
-     */
-    private fun isDiagonalWin() : Boolean {
-        return (gameState[0] != 2 && gameState[0] == gameState[4] && gameState[4] == gameState[8]) ||
-                (gameState[2] != 2 && gameState[2] == gameState[4] && gameState[4] == gameState[6])
-
-    }
 
     /**
      * define o jogador ativo e atualiza o indicador
      */
     private fun updateActivePlayer() {
-        if (activePlayer == 0) {
+        if (game.activePlayer == 0) {
             // Vez do jogador 2
 
-            activePlayer = 1
+            game.activePlayer = 1
             binding.imgCurrentTurn.setImageResource(R.drawable.ic_gray_o)
         } else {
             // Vez do jogador 1
 
-            activePlayer = 0
+            game.activePlayer = 0
             binding.imgCurrentTurn.setImageResource(R.drawable.ic_gray_x)
         }
     }
@@ -196,11 +135,10 @@ class GameActivity : AppCompatActivity() {
     }
 
     /**
-     * Responsavel por reiniciar o jogo e o board
+     * Responsavel por reiniciar o jogo
      */
     private fun restartGame() {
-        gameState = IntArray(9) { 2 }
-        turnCount = 0;
+        game.restart()
 
         // limpando board
         val gameTiles = arrayOf<ImageView>(binding.tile0, binding.tile1, binding.tile2,
@@ -211,15 +149,8 @@ class GameActivity : AppCompatActivity() {
             it.setImageResource(0);
         }
 
-        activePlayer = 0;
         binding.imgCurrentTurn.setImageResource(R.drawable.ic_gray_x)
     }
 
-    private fun getPlayerName(player: Int) :  String{
-        when (player){
-            0 -> return "X"
-            1 -> return "O"
-            else -> throw Exception("Player Not Found")
-        }
-    }
+
 }

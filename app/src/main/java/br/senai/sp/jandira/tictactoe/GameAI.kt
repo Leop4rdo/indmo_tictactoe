@@ -2,9 +2,9 @@ package br.senai.sp.jandira.tictactoe
 
 import kotlin.random.Random
 
-class GameAI(gameDifficulty: GameDifficulties, gameState: IntArray){
+class GameAI(gameDifficulty: GameDifficulties, game: Game){
     val gameDifficulty = gameDifficulty;
-    val gameState = gameState;
+    val game = game;
 
     fun makeMove() : Int {
         when (gameDifficulty) {
@@ -19,9 +19,22 @@ class GameAI(gameDifficulty: GameDifficulties, gameState: IntArray){
 
         do {
             move = Random.nextInt(until = 8);
-        } while (gameState[move] != 2)
+        } while (game.state[move] != 2)
 
         return move
+    }
+
+    private fun hardMove() : Int {
+        val bestMove = findBestMove();
+
+
+        return bestMove
+    }
+
+    private fun findBestMove() : Int {
+        if (game.isOver) return -1
+
+        for (i in 0..)
     }
 
 }
