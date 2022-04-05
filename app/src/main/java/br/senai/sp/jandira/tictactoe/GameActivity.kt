@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 
 import android.view.Window
 
@@ -15,14 +16,14 @@ import br.senai.sp.jandira.tictactoe.databinding.GameOverDialogBinding
 import java.lang.Exception
 
 class GameActivity : AppCompatActivity() {
-    lateinit var binding: ActivityGameBinding
+    private lateinit var binding: ActivityGameBinding
 
-    lateinit var gameMode: GameModes
-    lateinit var gameDifficulty: GameDifficulties
+    private lateinit var gameMode: GameModes
+    private lateinit var gameDifficulty: GameDifficulties
 
-    lateinit var gameTiles: Array<ImageView>
+    private lateinit var gameTiles: Array<ImageView>
 
-    val tokens = arrayOf(R.drawable.ic_token_x, R.drawable.ic_token_o)
+    private val tokens = arrayOf(R.drawable.ic_token_x, R.drawable.ic_token_o)
 
     /** array responsavel por armazenar todos os tiles do board */
 
@@ -34,19 +35,19 @@ class GameActivity : AppCompatActivity() {
      * 1 -> preenchido pelo jogador 2
      * 2 -> tile não preenchido ainda
      */
-    var gameState = IntArray(9) { 2 }
+    private var gameState = IntArray(9) { 2 }
 
-    var gameOver = false
+    private var gameOver = false
 
     /**
      * define de quem é a vez.
      * 0 -> player 1,
      * 1 -> player 2 ou AI,
      */
-    var activePlayer = 0
+    private var activePlayer = 0
 
     /** responsavel por determinar quantas jogadas ja foram realizadas */
-    var turnCount = 0
+    private var turnCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,11 +69,14 @@ class GameActivity : AppCompatActivity() {
         }
 
         binding.buttonVoltar.setOnClickListener { finish() }
-        binding.buttonHome.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+        binding.buttonHome.setOnClickListener { goHome() }
+    }
 
-            startActivity(intent)
-        }
+    private fun goHome() {
+        val intent = Intent(this, MainActivity::class.java);
+
+        startActivity(intent);
+        finish()
     }
 
     /**
@@ -107,7 +111,9 @@ class GameActivity : AppCompatActivity() {
             val gameAI = GameAI(gameDifficulty, gameState);
             val aiMove = gameAI.makeMove()
 
-            makeMove(gameTiles[aiMove]);
+            Handler().postDelayed({
+                makeMove(gameTiles[aiMove]);
+            }, 100)
         }
     }
 
@@ -179,12 +185,7 @@ class GameActivity : AppCompatActivity() {
 
         dialogBinding.dialogTitle.text = message;
 
-        dialogBinding.dialogButtonHome.setOnClickListener {
-
-            val intent = Intent(this, MainActivity::class.java);
-
-            startActivity(intent);
-        }
+        dialogBinding.dialogButtonHome.setOnClickListener { goHome() }
 
         dialogBinding.dialogButtonRestart.setOnClickListener {
             restartGame()
