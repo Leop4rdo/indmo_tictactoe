@@ -19,7 +19,7 @@ class Game {
     var turnCount = 0
 
     /** define se o jogo acabou */
-    var isOver = false;
+    var isOver = false
 
     /**
      * define de quem é a vez.
@@ -31,13 +31,12 @@ class Game {
     /** guarda os tokens dos jogadores*/
     val tokens = arrayOf(R.drawable.ic_token_x, R.drawable.ic_token_o)
 
-
     fun move(tileIndex: Int) {
-        state[tileIndex] = activePlayer;
+        state[tileIndex] = activePlayer
 
         turnCount++
 
-        isOver = isGameOverByWin() || isGameOverByDraw();
+        isOver = isGameOverByWin() || isGameOverByDraw()
     }
 
     /** retorna se o jogo acabou com empate */
@@ -84,7 +83,7 @@ class Game {
     /** reinicia o jogo */
     fun restart() {
         state = IntArray(9) { 2 }
-        isOver = false;
+        isOver = false
 
         activePlayer= 0
         turnCount = 0
@@ -98,5 +97,4 @@ class Game {
             else -> throw Exception("Player Not Found")
         }
     }
-
 }

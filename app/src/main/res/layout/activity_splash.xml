@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:text="@string/title_main_activity"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="#fff"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_version"
-            android:textColor="@color/white"
+            android:textColor="#fff"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:text="@string/dev_github_link"
-        android:textColor="@color/white"
+        android:textColor="#fff"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

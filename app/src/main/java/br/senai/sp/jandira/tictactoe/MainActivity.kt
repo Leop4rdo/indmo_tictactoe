@@ -3,19 +3,21 @@ package br.senai.sp.jandira.tictactoe
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import android.view.animation.AnimationUtils
 import br.senai.sp.jandira.tictactoe.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /** aviso de funcionalidade ainda em desenvolvimento */
-        val dialogWIP = Toast.makeText(this, R.string.dialog_wip, Toast.LENGTH_SHORT)
+        var fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+
+        binding.buttonPve.startAnimation(fadeInAnimation)
+        binding.buttonPvp.startAnimation(fadeInAnimation)
 
         binding.buttonPve.setOnClickListener { openDificuldadeActivity() }
         binding.buttonPvp.setOnClickListener { startGame() }
