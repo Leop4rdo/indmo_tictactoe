@@ -153,8 +153,6 @@ class GameActivity : AppCompatActivity() {
         }
 
         Handler().postDelayed({ dialog.show() }, 500)
-
-        dialogBinding.root.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in))
     }
 
     /**
